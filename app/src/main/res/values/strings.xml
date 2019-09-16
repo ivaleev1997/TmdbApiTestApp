@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TmdbApiTestApp</string>
+    <string name="action_settings">Settings</string>
+    
+    <array name="recyclers">
+        <item>Positional</item>
+        <item>PageKeyed</item>
+        <item>ItemKeyed</item>
+    </array>
+</resources>
