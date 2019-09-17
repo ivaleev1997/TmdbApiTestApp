@@ -5,6 +5,7 @@ import android.app.Application;
 import com.firebasetestapp.tmdbapitestapp.AppController;
 import com.firebasetestapp.tmdbapitestapp.di.module.ActivityModule;
 import com.firebasetestapp.tmdbapitestapp.di.module.ApiModule;
+import com.firebasetestapp.tmdbapitestapp.di.module.AppModule;
 import com.firebasetestapp.tmdbapitestapp.di.module.DbModule;
 import com.firebasetestapp.tmdbapitestapp.di.module.ViewModelModule;
 
@@ -20,6 +21,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         ActivityModule.class,
         ViewModelModule.class,
         ApiModule.class,
+        AppModule.class,
         AndroidSupportInjectionModule.class
 })
 @Singleton

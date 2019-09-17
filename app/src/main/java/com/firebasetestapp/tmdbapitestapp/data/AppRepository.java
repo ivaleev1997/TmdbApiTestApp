@@ -52,7 +52,7 @@ public class AppRepository {
 
         if (startPos + size - 1 < movies.size())
             result = movies.subList(startPos, startPos + size - 1);
-        else if (movies.get(startPos) != null)
+        else if (startPos <= movies.size() - 1)
             result = movies.subList(startPos, movies.size() - 1);
         //movies.subList(startPos, );
         /*for (Movie m : movies) {

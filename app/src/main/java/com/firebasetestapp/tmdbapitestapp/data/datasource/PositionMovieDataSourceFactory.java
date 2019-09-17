@@ -8,6 +8,7 @@ import androidx.paging.DataSource;
 public class PositionMovieDataSourceFactory extends DataSource.Factory<Integer, Movie> {
 
     private AppRepository mAppRepository;
+    private PositionMovieDataSource mCurrentPositionMovieDataSource;
 
     public PositionMovieDataSourceFactory(AppRepository appRepository) {
         mAppRepository = appRepository;
@@ -15,6 +16,6 @@ public class PositionMovieDataSourceFactory extends DataSource.Factory<Integer, 
 
     @Override
     public DataSource<Integer, Movie> create() {
-        return new PositionMovieDataSource(mAppRepository);
+        return mCurrentPositionMovieDataSource = new PositionMovieDataSource(mAppRepository);
     }
 }

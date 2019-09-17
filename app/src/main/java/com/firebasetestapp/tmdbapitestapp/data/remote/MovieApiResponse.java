@@ -1,12 +1,11 @@
 package com.firebasetestapp.tmdbapitestapp.data.remote;
 
-import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieApiResponse {
+public class MovieApiResponse<T> {
     public MovieApiResponse() {
         this.results = new ArrayList<>();
     }
@@ -19,7 +18,7 @@ public class MovieApiResponse {
     @SerializedName("total_results")
     private long totalResults;
 
-    private List<Movie> results;
+    private List<T> results;
 
     public long getPage() {
         return page;
@@ -45,11 +44,11 @@ public class MovieApiResponse {
         this.totalResults = totalResults;
     }
 
-    public List<Movie> getResults() {
+    public List<T> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<T> results) {
         this.results = results;
     }
 }
