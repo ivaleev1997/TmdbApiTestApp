@@ -1,5 +1,6 @@
 package com.firebasetestapp.tmdbapitestapp.di.module;
 
+import com.firebasetestapp.tmdbapitestapp.MainActivityViewModel;
 import com.firebasetestapp.tmdbapitestapp.ui.AppViewModelFactory;
 import com.firebasetestapp.tmdbapitestapp.ui.movierecycler.MovieRecyclerViewModel;
 import com.firebasetestapp.tmdbapitestapp.di.ViewModuleKey;
@@ -19,4 +20,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModuleKey(MovieRecyclerViewModel.class)
     abstract MovieRecyclerViewModel bindMovieRecyclerViewModel(MovieRecyclerViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModuleKey(MainActivityViewModel.class)
+    abstract MainActivityViewModel bindMainActivityViewModel(MainActivityViewModel viewModel);
 }

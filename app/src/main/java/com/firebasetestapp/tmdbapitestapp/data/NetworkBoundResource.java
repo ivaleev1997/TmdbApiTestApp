@@ -1,32 +1,55 @@
 package com.firebasetestapp.tmdbapitestapp.data;
 
 
-import com.firebasetestapp.tmdbapitestapp.data.remote.MovieApiResponse;
-
-import java.util.List;
-
 import androidx.annotation.MainThread;
 import androidx.annotation.WorkerThread;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class NetworkBoundResource<ResultType, RequestType> {
 
-    Observable result;
+    Observable<Resource<ResultType>> result;
 
     public NetworkBoundResource() {
-        result = Observable.empty();
-        //TODO
+        Observable<Resource<ResultType>> source;
+
+        source = createCall()
+                .subscribeOn(Schedulers.io())
+                .doOnNext(movieApiResponseResource -> saveCallResult(processResponse(movieApiResponseResource)))
+                .flatMap(movieApiResponseResource -> loadFromDb().toObservable().map(Resource::success))
+                .doOnError(throwable -> fetchFailed())
+                .onErrorResumeNext(throwable -> {
+                    return loadFromDb().toObservable().map(result -> Resource.error(throwable.getMessage(), result));
+                })
+                .observeOn(AndroidSchedulers.mainThread());
+
+        result = Observable.concat(loadFromDb().toObservable().map(Resource::success).take(1), source);
+    }
+
+    public Observable<Resource<ResultType>> getObservable() {
+        return result;
     }
 
     @WorkerThread
-    protected abstract void saveCallResult(RequestType requestType);
+    private RequestType processResponse(Resource<RequestType> responseResource) {
+        return responseResource.data;
+    }
+
+    protected abstract void fetchFailed();
+
+    @WorkerThread
+    protected abstract void saveCallResult(RequestType item);
 
     @MainThread
     protected abstract Boolean shouldFetch();
 
     @MainThread
-    protected abstract Observable<List<ResultType>> loadFromDb();
+    protected abstract Flowable<ResultType> loadFromDb();
 
     @MainThread
-    protected abstract Observable<MovieApiResponse<ResultType>> createCall();
+    @NonNull
+    protected abstract Observable<Resource<RequestType>> createCall();
 }

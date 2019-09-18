@@ -3,24 +3,40 @@ package com.firebasetestapp.tmdbapitestapp.ui;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.firebasetestapp.tmdbapitestapp.MainActivityViewModel;
 import com.firebasetestapp.tmdbapitestapp.R;
+import com.firebasetestapp.tmdbapitestapp.data.Status;
 import com.firebasetestapp.tmdbapitestapp.ui.bottomsheet.RecyclerListDialogFragment;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import javax.inject.Inject;
+
+import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class MainActivity extends DaggerAppCompatActivity implements RecyclerListDialogFragment.Listener {
 
     private final String[] recyclers = getResources().getStringArray(R.array.recyclers);
 
+    @Inject
+    AppViewModelFactory mAppViewModelFactory;
+
+    private MainActivityViewModel mMainActivityViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mMainActivityViewModel = ViewModelProviders.of(this, mAppViewModelFactory).get(MainActivityViewModel.class);
+        mMainActivityViewModel.getStatusLiveData().observe(this, status -> {
+            if (status == Status.SUCCESS) Toast.makeText(this, "Success loaded data", Toast.LENGTH_SHORT).show();
+            else Toast.makeText(this, "Error initial load data. Check network connection", Toast.LENGTH_SHORT).show();
+        });
         BottomAppBar bottomAppBar = findViewById(R.id.bottomBar);
         setSupportActionBar(bottomAppBar);
         bottomAppBar.setFabAlignmentMode(BottomAppBar.FAB_ALIGNMENT_MODE_END);

@@ -1,8 +1,5 @@
 package com.firebasetestapp.tmdbapitestapp.data;
 
-import android.util.Log;
-
-import com.firebasetestapp.tmdbapitestapp.AppConstants;
 import com.firebasetestapp.tmdbapitestapp.data.local.AppDb;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 import com.firebasetestapp.tmdbapitestapp.data.local.MovieDao;
@@ -31,19 +28,21 @@ public class AppRepository {
     }
 
     public Completable initialLoadDb() {
+        //TODO merge 6 observables 1-6 pages
+        //Observable merged = Observable.merge();
         return Completable.fromObservable(
-                mMovieApiService.fetchPopularMovies()
+                Observable.merge(
+                        mMovieApiService.fetchPopularMoviesByPage(1),
+                        mMovieApiService.fetchPopularMoviesByPage(2),
+                        mMovieApiService.fetchPopularMoviesByPage(3),
+                        mMovieApiService.fetchPopularMoviesByPage(4))
                         .subscribeOn(Schedulers.io())
-                        .flatMap(movieApiService -> {
-                            Log.d(AppConstants.TAG, "Current flatMap thread: " + Thread.currentThread());
-                            return Observable.just(movieApiService.getResults());
-                        })
-                        .doOnNext(movies -> {
-                            //save data in DB
-                            mMovieDao.insertListMovies(movies);
-                            Log.d(AppConstants.TAG, "Current doOnNext thread: " + Thread.currentThread());
-                        }
-        ));
+                        .doOnNext(movieApiResponse -> {
+                            if (movieApiResponse != null) {
+                                List<Movie> movies = movieApiResponse.getResults();
+                                mMovieDao.insertListMovies(movies);
+                            }
+                        }));
     }
 
     public List<Movie> getListMovies(int startPos, int size) {
@@ -54,6 +53,7 @@ public class AppRepository {
             result = movies.subList(startPos, startPos + size - 1);
         else if (startPos <= movies.size() - 1)
             result = movies.subList(startPos, movies.size() - 1);
+
         //movies.subList(startPos, );
         /*for (Movie m : movies) {
            if (movies.indexOf(m) >= startPos && size >= 0) {
