@@ -2,6 +2,7 @@ package com.firebasetestapp.tmdbapitestapp.data.local;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -25,4 +26,7 @@ public interface MovieDao {
 
     @Query("DELETE FROM movie")
     void deleteAllMovies();
+
+    @Query("SELECT * FROM movie")
+    LiveData<List<Movie>> getLiveDataListMovies();
 }

@@ -5,6 +5,7 @@ import com.firebasetestapp.tmdbapitestapp.ui.AppViewModelFactory;
 import com.firebasetestapp.tmdbapitestapp.ui.movierecycler.MovieRecyclerViewModel;
 import com.firebasetestapp.tmdbapitestapp.di.ViewModuleKey;
 
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import dagger.Binds;
 import dagger.Module;
@@ -19,10 +20,10 @@ public abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModuleKey(MovieRecyclerViewModel.class)
-    abstract MovieRecyclerViewModel bindMovieRecyclerViewModel(MovieRecyclerViewModel viewModel);
+    abstract ViewModel bindMovieRecyclerViewModel(MovieRecyclerViewModel viewModel);
 
     @Binds
     @IntoMap
     @ViewModuleKey(MainActivityViewModel.class)
-    abstract MainActivityViewModel bindMainActivityViewModel(MainActivityViewModel viewModel);
+    abstract ViewModel bindMainActivityViewModel(MainActivityViewModel viewModel);
 }

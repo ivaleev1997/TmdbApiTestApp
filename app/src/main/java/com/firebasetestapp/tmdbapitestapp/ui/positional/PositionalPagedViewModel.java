@@ -6,12 +6,13 @@ import com.firebasetestapp.tmdbapitestapp.data.datasource.PositionMovieDataSourc
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
-
+@Singleton
 public class PositionalPagedViewModel extends ViewModel {
 
     private AppRepository mAppRepository;

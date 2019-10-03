@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.lifecycle.LiveData;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -42,6 +43,7 @@ public class AppRepository {
                                 List<Movie> movies = movieApiResponse.getResults();
                                 mMovieDao.insertListMovies(movies);
                             }
+                            System.out.println("success");
                         }));
     }
 
@@ -63,5 +65,9 @@ public class AppRepository {
         }*/
 
         return result;
+    }
+
+    public LiveData<List<Movie>> getMoviesFromDb() {
+        return mMovieDao.getLiveDataListMovies();
     }
 }

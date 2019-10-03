@@ -9,29 +9,38 @@ import com.firebasetestapp.tmdbapitestapp.MainActivityViewModel;
 import com.firebasetestapp.tmdbapitestapp.R;
 import com.firebasetestapp.tmdbapitestapp.data.Status;
 import com.firebasetestapp.tmdbapitestapp.ui.bottomsheet.RecyclerListDialogFragment;
+import com.firebasetestapp.tmdbapitestapp.ui.movierecycler.MovieRecyclerFragment;
+import com.firebasetestapp.tmdbapitestapp.ui.pagekeyed.PageKeyedFragment;
+import com.firebasetestapp.tmdbapitestapp.ui.positional.PositionalPagedFragment;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import javax.inject.Inject;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class MainActivity extends DaggerAppCompatActivity implements RecyclerListDialogFragment.Listener {
 
-    private final String[] recyclers = getResources().getStringArray(R.array.recyclers);
+    private String[] recyclers;
 
     @Inject
     AppViewModelFactory mAppViewModelFactory;
 
     private MainActivityViewModel mMainActivityViewModel;
+    private FragmentManager mFragmentManager;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclers = getResources().getStringArray(R.array.recyclers);
         mMainActivityViewModel = ViewModelProviders.of(this, mAppViewModelFactory).get(MainActivityViewModel.class);
         mMainActivityViewModel.getStatusLiveData().observe(this, status -> {
             if (status == Status.SUCCESS) Toast.makeText(this, "Success loaded data", Toast.LENGTH_SHORT).show();
@@ -45,6 +54,8 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
         //setSupportActionBar(fab);
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
+
+        startSelectedFragment(MovieRecyclerFragment.newInstance());
     }
 
     @Override
@@ -69,15 +80,30 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
         return super.onOptionsItemSelected(item);
     }
 
+    private void startSelectedFragment(Fragment fragment) {
+        if (mFragmentManager == null)
+            mFragmentManager = getSupportFragmentManager();
+
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onRecyclerClicked(int position) {
         //Toast.makeText(this, "position " + position, Toast.LENGTH_SHORT).show();
         switch (recyclers[position]) {
             case "Positional":
+                if (!(mCurrentFragment instanceof PositionalPagedFragment))
+                    startSelectedFragment(mCurrentFragment = PositionalPagedFragment.newInstance());
                 break;
             case "PageKeyed":
+                if (!(mCurrentFragment instanceof PageKeyedFragment))
+                    startSelectedFragment(mCurrentFragment = PageKeyedFragment.newInstance());
                 break;
             case "ItemKeyed":
+                //if (!(mCurrentFragment instanceof ))
                 break;
             default:
                 break;
