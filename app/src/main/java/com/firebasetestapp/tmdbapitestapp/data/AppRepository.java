@@ -3,6 +3,7 @@ package com.firebasetestapp.tmdbapitestapp.data;
 import com.firebasetestapp.tmdbapitestapp.data.local.AppDb;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 import com.firebasetestapp.tmdbapitestapp.data.local.MovieDao;
+import com.firebasetestapp.tmdbapitestapp.data.remote.MovieApiResponse;
 import com.firebasetestapp.tmdbapitestapp.data.remote.MovieApiService;
 
 import java.util.ArrayList;
@@ -69,5 +70,10 @@ public class AppRepository {
 
     public LiveData<List<Movie>> getMoviesFromDb() {
         return mMovieDao.getLiveDataListMovies();
+    }
+
+    public Observable<MovieApiResponse<Movie>> getObservableMoviesByPage(Long page) {
+        return mMovieApiService.fetchPopularMoviesByPage(page)
+                .subscribeOn(Schedulers.io());
     }
 }

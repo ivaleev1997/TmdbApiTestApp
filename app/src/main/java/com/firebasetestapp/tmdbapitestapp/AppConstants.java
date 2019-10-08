@@ -7,4 +7,5 @@ public interface AppConstants {
     //SharedPrefs
     String RATE_LIMITER = "rate_limiter";
     String SHARED_PREFS = "shared_prefs";
+    Long PAGEKEYED_INITIAL_KEY = 1L;
 }

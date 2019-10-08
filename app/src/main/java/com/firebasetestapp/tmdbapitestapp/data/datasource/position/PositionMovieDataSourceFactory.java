@@ -1,4 +1,4 @@
-package com.firebasetestapp.tmdbapitestapp.data.datasource;
+package com.firebasetestapp.tmdbapitestapp.data.datasource.position;
 
 import com.firebasetestapp.tmdbapitestapp.data.AppRepository;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;

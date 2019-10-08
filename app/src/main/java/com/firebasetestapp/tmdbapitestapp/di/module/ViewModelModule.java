@@ -4,6 +4,7 @@ import com.firebasetestapp.tmdbapitestapp.MainActivityViewModel;
 import com.firebasetestapp.tmdbapitestapp.ui.AppViewModelFactory;
 import com.firebasetestapp.tmdbapitestapp.ui.movierecycler.MovieRecyclerViewModel;
 import com.firebasetestapp.tmdbapitestapp.di.ViewModuleKey;
+import com.firebasetestapp.tmdbapitestapp.ui.pagekeyed.PageKeyedViewModel;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,4 +27,9 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModuleKey(MainActivityViewModel.class)
     abstract ViewModel bindMainActivityViewModel(MainActivityViewModel viewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModuleKey(PageKeyedViewModel.class)
+    abstract ViewModel bindPageKeyedViewModel(PageKeyedViewModel viewModel);
 }

@@ -12,14 +12,16 @@ public class Resource<T> {
     public final Status status;
     @Nullable
     public final T data;
-    @Nullable public final String message;
+    @Nullable
+    public final String message;
+
     private Resource(@NonNull Status status, @Nullable T data, @Nullable String message) {
         this.status = status;
         this.data = data;
         this.message = message;
     }
 
-    public static <T> Resource<T> success(@NonNull T data) {
+    public static <T> Resource<T> success(@Nullable T data) {
         return new Resource<>(SUCCESS, data, null);
     }
 

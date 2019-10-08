@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel;
 @Singleton
 public class MovieRecyclerViewModel extends ViewModel {
     // TODO: Implement the ViewModel
-
     private AppRepository mAppRepository;
     private LiveData<List<Movie>> mListLiveData;
 

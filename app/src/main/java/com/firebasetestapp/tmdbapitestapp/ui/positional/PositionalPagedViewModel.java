@@ -2,7 +2,7 @@ package com.firebasetestapp.tmdbapitestapp.ui.positional;
 
 import com.firebasetestapp.tmdbapitestapp.AppExecutors;
 import com.firebasetestapp.tmdbapitestapp.data.AppRepository;
-import com.firebasetestapp.tmdbapitestapp.data.datasource.PositionMovieDataSourceFactory;
+import com.firebasetestapp.tmdbapitestapp.data.datasource.position.PositionMovieDataSourceFactory;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 
 import javax.inject.Inject;

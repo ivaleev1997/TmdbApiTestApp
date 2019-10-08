@@ -1,22 +1,25 @@
 package com.firebasetestapp.tmdbapitestapp.ui.pagekeyed;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebasetestapp.tmdbapitestapp.R;
+import com.firebasetestapp.tmdbapitestapp.ui.AppViewModelFactory;
+
+import javax.inject.Inject;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 
 public class PageKeyedFragment extends Fragment {
 
     private PageKeyedViewModel mViewModel;
+    @Inject
+    AppViewModelFactory mAppViewModelFactory;
 
     public static PageKeyedFragment newInstance() {
         return new PageKeyedFragment();
@@ -31,8 +34,10 @@ public class PageKeyedFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(PageKeyedViewModel.class);
-        // TODO: Use the ViewModel
+        mViewModel = ViewModelProviders.of(this, mAppViewModelFactory).get(PageKeyedViewModel.class);
+        // TODO: try DataBinding
+        // TODO: finish PageKeyedAdapter
+        // TODO: add Recycler, observe livedata from mViewModel..
     }
 
 }

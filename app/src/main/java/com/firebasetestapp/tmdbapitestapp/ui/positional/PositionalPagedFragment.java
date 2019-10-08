@@ -57,8 +57,6 @@ public class PositionalPagedFragment extends Fragment {
 
         private class MoviePositionalViewHolder extends RecyclerView.ViewHolder {
 
-
-
             public MoviePositionalViewHolder(@NonNull View itemView) {
                 super(itemView);
             }
