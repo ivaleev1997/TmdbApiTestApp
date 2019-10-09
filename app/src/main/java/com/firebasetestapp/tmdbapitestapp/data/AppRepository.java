@@ -30,7 +30,6 @@ public class AppRepository {
     }
 
     public Completable initialLoadDb() {
-        //TODO merge 6 observables 1-6 pages
         //Observable merged = Observable.merge();
         return Completable.fromObservable(
                 Observable.merge(

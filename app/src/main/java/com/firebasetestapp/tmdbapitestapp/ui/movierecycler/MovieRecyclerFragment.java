@@ -35,28 +35,35 @@ public class MovieRecyclerFragment extends DaggerFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.movie_recycler_fragment, container, false);
-        mRecyclerView = view.findViewById(R.id.movie_recycler);
-        mProgressBar = view.findViewById(R.id.progress_bar);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        return view;
+        return inflater.inflate(R.layout.movie_recycler_fragment, container, false);
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         mViewModel = ViewModelProviders.of(this, mAppViewModelFactory).get(MovieRecyclerViewModel.class);
+        mRecyclerView = view.findViewById(R.id.movie_recycler);
+        mProgressBar = view.findViewById(R.id.progress_bar);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mMovieRecyclerAdapter = new MovieRecyclerAdapter();
         mRecyclerView.setAdapter(mMovieRecyclerAdapter);
         mViewModel.getListMovieLiveData().observe(getViewLifecycleOwner(), movies -> {
             System.out.println("observer");
-            //TODO diffutil
+            //TODO diffutil - create MovieDiffUtilCallBack extends DiffUtil.CallBack..
+            //DiffUtil.calculateDiff()
             mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
             mMovieRecyclerAdapter.setMovieList(movies);
             mMovieRecyclerAdapter.notifyDataSetChanged();
         });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 }

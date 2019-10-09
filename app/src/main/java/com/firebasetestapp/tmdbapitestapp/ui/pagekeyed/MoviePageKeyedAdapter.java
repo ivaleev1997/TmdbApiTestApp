@@ -1,11 +1,15 @@
 package com.firebasetestapp.tmdbapitestapp.ui.pagekeyed;
 
-import android.view.View;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.firebasetestapp.tmdbapitestapp.R;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
+import com.firebasetestapp.tmdbapitestapp.databinding.PageKeyedItemBinding;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,18 +27,28 @@ public class MoviePageKeyedAdapter extends PagedListAdapter<Movie, MoviePageKeye
     @NonNull
     @Override
     public MoviePageKeyedAdapter.MoviePageKeyedViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        Context context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        PageKeyedItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.page_keyed_item, parent, false);
+        return new MoviePageKeyedViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MoviePageKeyedViewHolder holder, int position) {
-
+        holder.bind(getItem(position));
     }
 
     public class MoviePageKeyedViewHolder extends RecyclerView.ViewHolder {
 
-        public MoviePageKeyedViewHolder(@NonNull View itemView) {
-            super(itemView);
+        PageKeyedItemBinding binding;
+
+        public MoviePageKeyedViewHolder(PageKeyedItemBinding movieRecyclerItemBinding) {
+            super(movieRecyclerItemBinding.getRoot());
+            binding = movieRecyclerItemBinding;
+        }
+
+        public void bind(Movie movie) {
+            binding.setMovie(movie);
         }
     }
 }

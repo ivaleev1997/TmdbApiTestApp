@@ -44,7 +44,7 @@ public class RecyclerListDialogFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.different_recyclers, container, false);
+        return inflater.inflate(R.layout.bottom_sheet_dialog_fragment, container, false);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class RecyclerListDialogFragment extends BottomSheetDialogFragment {
 
         ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             // TODO: Customize the item layout
-            super(inflater.inflate(R.layout.fragment_recycler_list_dialog_item, parent, false));
+            super(inflater.inflate(R.layout.bottom_sheet_dialog_item, parent, false));
             text = (TextView) itemView.findViewById(R.id.text);
             text.setOnClickListener(v -> {
                 if (mListener != null) {

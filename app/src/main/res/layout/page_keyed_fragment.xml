@@ -6,9 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.pagekeyed.PageKeyedFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/page_keyed_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:listitem="@layout/page_keyed_item"/>
 
 </FrameLayout>

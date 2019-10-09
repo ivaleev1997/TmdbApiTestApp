@@ -1,8 +1,12 @@
 package com.firebasetestapp.tmdbapitestapp.data.local;
 
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -82,6 +86,12 @@ public class Movie {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    @Ignore
+    @BindingAdapter("glideImageLoad")
+    public static void loadImage(ImageView imageView, String url) {
+        Glide.with(imageView).load(url).into(imageView);
     }
 
     @Ignore
