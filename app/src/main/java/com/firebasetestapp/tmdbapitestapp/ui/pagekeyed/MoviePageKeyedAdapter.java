@@ -30,12 +30,14 @@ public class MoviePageKeyedAdapter extends PagedListAdapter<Movie, MoviePageKeye
         Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         PageKeyedItemBinding binding = DataBindingUtil.inflate(layoutInflater, R.layout.page_keyed_item, parent, false);
+
         return new MoviePageKeyedViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MoviePageKeyedViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        if (getItem(position) != null)
+            holder.bind(getItem(position));
     }
 
     public class MoviePageKeyedViewHolder extends RecyclerView.ViewHolder {

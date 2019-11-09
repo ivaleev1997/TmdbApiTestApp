@@ -8,13 +8,13 @@
             type="com.firebasetestapp.tmdbapitestapp.data.local.Movie"/>
     </data>
     <LinearLayout
-                  android:orientation="horizontal"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginStart="5dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginBottom="5dp"
-                  android:layout_marginEnd="5dp">
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="5dp">
 
         <ImageView
             android:id="@+id/movie_icon"
@@ -34,10 +34,9 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/movie_name"
-                android:layout_width="240dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
                 android:text="@{movie.originalTitle}"
                 android:textSize="18dp"
                 android:textStyle="italic"/>
@@ -50,12 +49,9 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/movie_release"
-                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:maxLines="1"
-                    android:textSize="12sp"
                     android:text="@{movie.releaseDate}"/>
             </LinearLayout>
         </LinearLayout>

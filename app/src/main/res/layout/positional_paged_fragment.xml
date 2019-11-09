@@ -10,6 +10,6 @@
         android:id="@+id/positional_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/positioanl_paged_fragment_item"/>
+        tools:listitem="@layout/positional_paged_item"/>
 
 </FrameLayout>

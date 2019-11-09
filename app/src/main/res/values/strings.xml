@@ -3,8 +3,8 @@
     <string name="action_settings">Settings</string>
     
     <array name="recyclers">
+        <item>Simple Recycler</item>
         <item>Positional</item>
         <item>PageKeyed</item>
-        <item>ItemKeyed</item>
     </array>
 </resources>

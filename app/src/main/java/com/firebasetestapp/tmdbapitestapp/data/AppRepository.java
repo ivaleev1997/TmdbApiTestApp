@@ -49,12 +49,16 @@ public class AppRepository {
 
     public List<Movie> getListMovies(int startPos, int size) {
         List<Movie> result = new ArrayList<>();
-        List<Movie> movies = mMovieDao.getMovies();
+        try {
+            List<Movie> movies = mMovieDao.getMovies();
 
-        if (startPos + size - 1 < movies.size())
-            result = movies.subList(startPos, startPos + size - 1);
-        else if (startPos <= movies.size() - 1)
-            result = movies.subList(startPos, movies.size() - 1);
+            if (startPos + size - 1 < movies.size())
+                result = movies.subList(startPos, startPos + size);
+            else if (startPos <= movies.size() - 1)
+                result = movies.subList(startPos, movies.size());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //movies.subList(startPos, );
         /*for (Movie m : movies) {

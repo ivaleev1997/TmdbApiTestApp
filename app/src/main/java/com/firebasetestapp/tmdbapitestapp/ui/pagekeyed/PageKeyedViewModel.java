@@ -53,4 +53,10 @@ public class PageKeyedViewModel extends ViewModel {
     public LiveData<Resource> getStatusLiveData() {
         return mStatusLiveData;
     }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mCompositeDisposable.clear();
+    }
 }

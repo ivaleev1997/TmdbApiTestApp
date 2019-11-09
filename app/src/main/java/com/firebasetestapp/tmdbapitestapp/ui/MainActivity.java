@@ -34,6 +34,7 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
     private MainActivityViewModel mMainActivityViewModel;
     private FragmentManager mFragmentManager;
     private Fragment mCurrentFragment;
+    private int currentFragmentId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
         fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show());
 
-        startSelectedFragment(MovieRecyclerFragment.newInstance());
+        startSelectedFragment(mCurrentFragment = MovieRecyclerFragment.newInstance(), MovieRecyclerFragment.class.getName());
     }
 
     @Override
@@ -73,20 +74,24 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
 
         //noinspection SimplifiableIfStatement
         if (id == android.R.id.home) {
-            RecyclerListDialogFragment recyclerListDialogFragment = RecyclerListDialogFragment.newInstance(1);
+            RecyclerListDialogFragment recyclerListDialogFragment = RecyclerListDialogFragment.newInstance(currentFragmentId);
             recyclerListDialogFragment.show(getSupportFragmentManager(), "recycler");
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void startSelectedFragment(Fragment fragment) {
+    private void startSelectedFragment(Fragment fragment, String tag) {
         if (mFragmentManager == null)
             mFragmentManager = getSupportFragmentManager();
 
+        if (mFragmentManager.findFragmentByTag(tag) != null)
+            fragment = mFragmentManager.findFragmentByTag(tag);
+        mCurrentFragment = fragment;
+
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame, fragment);
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commit();
     }
 
@@ -94,18 +99,33 @@ public class MainActivity extends DaggerAppCompatActivity implements RecyclerLis
     public void onRecyclerClicked(int position) {
         //Toast.makeText(this, "position " + position, Toast.LENGTH_SHORT).show();
         switch (recyclers[position]) {
+            case "Simple Recycler":
+                if (!(mCurrentFragment instanceof MovieRecyclerFragment))
+                    startSelectedFragment(mCurrentFragment = MovieRecyclerFragment.newInstance(), MovieRecyclerFragment.class.getName());
+                break;
             case "Positional":
                 if (!(mCurrentFragment instanceof PositionalPagedFragment))
-                    startSelectedFragment(mCurrentFragment = PositionalPagedFragment.newInstance());
+                    startSelectedFragment(mCurrentFragment = PositionalPagedFragment.newInstance(), PositionalPagedFragment.class.getName());
                 break;
             case "PageKeyed":
                 if (!(mCurrentFragment instanceof PageKeyedFragment))
-                    startSelectedFragment(mCurrentFragment = PageKeyedFragment.newInstance());
-                break;
-            case "ItemKeyed":
-                //if (!(mCurrentFragment instanceof ))
+                    startSelectedFragment(mCurrentFragment = PageKeyedFragment.newInstance(), PageKeyedFragment.class.getName());
                 break;
             default:
+                break;
+        }
+    }
+
+    public void fragmentOnResumed(String fragment) {
+        switch (fragment) {
+            case "com.firebasetestapp.tmdbapitestapp.ui.movierecycler.MovieRecyclerFragment":
+                currentFragmentId = 0;
+                break;
+            case "com.firebasetestapp.tmdbapitestapp.ui.pagekeyed.PageKeyedFragment":
+                currentFragmentId = 2;
+                break;
+            case "com.firebasetestapp.tmdbapitestapp.ui.positional.PositionalPagedFragment":
+                currentFragmentId = 1;
                 break;
         }
     }

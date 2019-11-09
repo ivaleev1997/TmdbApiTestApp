@@ -16,6 +16,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.firebasetestapp.tmdbapitestapp.AppConstants.TMDB_BASE_URL;
+
 @Module
 public class ApiModule {
 
@@ -36,6 +38,7 @@ public class ApiModule {
         httpClient.addInterceptor(logging);
         httpClient.connectTimeout(30, TimeUnit.SECONDS);
         httpClient.readTimeout(30, TimeUnit.SECONDS);
+
         return httpClient.build();
     }
 
@@ -45,7 +48,7 @@ public class ApiModule {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(TMDB_BASE_URL)
                 .client(okHttpClient)
                 .build();
     }

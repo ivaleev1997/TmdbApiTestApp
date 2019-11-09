@@ -22,6 +22,10 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
         mMovieList = new ArrayList<>();
     }
 
+    public List<Movie> getMovieList() {
+        return mMovieList;
+    }
+
     @NonNull
     @Override
     public MovieRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -3,7 +3,12 @@ package com.firebasetestapp.tmdbapitestapp.data.local;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.firebasetestapp.tmdbapitestapp.AppConstants;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.BindingAdapter;
@@ -65,7 +70,7 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return posterPath;
+        return AppConstants.TMDB_POSTER_BASE_URL + posterPath;
     }
 
     public void setPosterPath(String posterPath) {
@@ -81,7 +86,25 @@ public class Movie {
     }
 
     public String getReleaseDate() {
-        return releaseDate;
+        String[] date = releaseDate.split("-"); //1995-02-21 ---> 21.02.95
+        StringBuilder result = new StringBuilder();
+
+        if (date.length == 3) {
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(date));
+            Collections.reverse(arrayList);
+            for (String s: arrayList) {
+                if (arrayList.indexOf(s) == arrayList.size() - 1) {
+                    s = s.substring(2);
+                    result.append(s);
+                } else {
+                    result.append(s);
+                    result.append(".");
+                }
+            }
+        } else result.append(releaseDate);
+
+        //System.out.println(result.toString());
+        return result.toString();
     }
 
     public void setReleaseDate(String releaseDate) {

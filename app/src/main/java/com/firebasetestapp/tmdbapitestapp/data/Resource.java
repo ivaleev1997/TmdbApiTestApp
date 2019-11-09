@@ -34,7 +34,7 @@ public class Resource<T> {
     }
 
     public boolean isSuccess() {
-        return status == SUCCESS && data != null;
+        return status == SUCCESS;
     }
 
     public boolean isLoading() {
@@ -43,5 +43,9 @@ public class Resource<T> {
 
     public boolean isLoaded() {
         return status != LOADING;
+    }
+
+    public boolean isError() {
+        return status == ERROR;
     }
 }

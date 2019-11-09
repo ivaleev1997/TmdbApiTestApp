@@ -60,5 +60,4 @@ public class MainActivityViewModel extends ViewModel {
     public void checkForUpdate() {
         //TODO
     }
-
 }

@@ -18,7 +18,8 @@
         style="@style/Widget.MaterialComponents.BottomAppBar"
         app:backgroundTint="@color/design_default_color_primary"
         app:navigationIcon="@drawable/ic_action_name"
-        app:fabAlignmentMode="end"/>
+        app:fabAlignmentMode="end"
+        app:hideOnScroll="true"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -28,5 +29,4 @@
         app:layout_anchor="@id/bottomBar"/>
 
     <!--<include layout="@layout/bottom_sheet_dialog_fragment"/>-->
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

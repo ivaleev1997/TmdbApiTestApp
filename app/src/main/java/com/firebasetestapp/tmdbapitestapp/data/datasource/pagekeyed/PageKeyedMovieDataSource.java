@@ -4,6 +4,8 @@ import com.firebasetestapp.tmdbapitestapp.data.AppRepository;
 import com.firebasetestapp.tmdbapitestapp.data.Resource;
 import com.firebasetestapp.tmdbapitestapp.data.local.Movie;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
@@ -33,7 +35,8 @@ public class PageKeyedMovieDataSource extends PageKeyedDataSource<Long, Movie> {
                                 if (movieMovieApiResponse.getResults() != null) {
                                     if (!movieMovieApiResponse.getResults().isEmpty()) {
                                         mStatusLiveData.postValue(Resource.success(null));
-                                        callback.onResult(movieMovieApiResponse.getResults(),null, movieMovieApiResponse.getPage() + 1);
+                                        List<Movie> movies = movieMovieApiResponse.getResults();
+                                        callback.onResult(movies,null, movieMovieApiResponse.getPage() + 1);
                                     }
                                 } else {
                                     mStatusLiveData.postValue(Resource.error("loadInitial - Results is null", null));
@@ -55,7 +58,8 @@ public class PageKeyedMovieDataSource extends PageKeyedDataSource<Long, Movie> {
                         if (movieMovieApiResponse.getResults() != null) {
                             if (!movieMovieApiResponse.getResults().isEmpty()) {
                                 mStatusLiveData.postValue(Resource.success(null));
-                                callback.onResult(movieMovieApiResponse.getResults(), movieMovieApiResponse.getPage() - 1 > 0 ? null : movieMovieApiResponse.getPage() - 1);
+                                List<Movie> movies = movieMovieApiResponse.getResults();
+                                callback.onResult(movies, movieMovieApiResponse.getPage() - 1 > 0 ? null : movieMovieApiResponse.getPage() - 1);
                             }
                         } else {
                             mStatusLiveData.postValue(Resource.error("loadBefore - Results is null", null));
@@ -78,7 +82,8 @@ public class PageKeyedMovieDataSource extends PageKeyedDataSource<Long, Movie> {
                                         if (movieMovieApiResponse.getResults() != null) {
                                             if (!movieMovieApiResponse.getResults().isEmpty()) {
                                                 mStatusLiveData.postValue(Resource.success(null));
-                                                callback.onResult(movieMovieApiResponse.getResults(), movieMovieApiResponse.getPage() + 1 > movieMovieApiResponse.getTotalPages() ? null : movieMovieApiResponse.getPage() + 1);
+                                                List<Movie> movies = movieMovieApiResponse.getResults();
+                                                callback.onResult(movies, movieMovieApiResponse.getPage() + 1 > movieMovieApiResponse.getTotalPages() ? null : movieMovieApiResponse.getPage() + 1);
                                             }
                                         } else {
                                             mStatusLiveData.postValue(Resource.error("loadAfter - Results is null", null));
